@@ -14,6 +14,11 @@ public abstract class Tweet implements Tweetable {
         this.date = new Date();
     }
 
+    @Override
+    public String toString(){
+        return message;
+    }
+
     public Tweet(String message, Date date){
         this.message = message;
         this.date = date;
