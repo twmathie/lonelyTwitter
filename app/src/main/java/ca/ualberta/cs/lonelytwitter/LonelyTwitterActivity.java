@@ -40,15 +40,7 @@ public class LonelyTwitterActivity extends Activity {
 				setResult(RESULT_OK);
 				String text = bodyText.getText().toString();
 
-
-				Date theDate = new Date();
 				Tweet newTweet = new NormalTweet(text);
-				try {
-					newTweet.setMessage("test");
-				} catch (TweetTooLongException e) {
-					e.printStackTrace();
-				}
-				newTweet.getMessage();
 
 				ImportantTweet newImportantTweet = new ImportantTweet(text);
 				newImportantTweet.getMessage();
@@ -75,16 +67,12 @@ public class LonelyTwitterActivity extends Activity {
 		oldTweetsList.setAdapter(adapter);
 	}
 
-	private String[] loadFromFile() {
+	private void loadFromFile() {
 		ArrayList<String> tweets = new ArrayList<String>();
 		try {
 			FileInputStream fis = openFileInput(FILENAME);
 			BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-			String line = in.readLine();
-			while (line != null) {
-				tweets.add(line);
-				line = in.readLine();
-			}
+			Gson gson = new Gson();
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -93,7 +81,6 @@ public class LonelyTwitterActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return tweets.toArray(new String[tweets.size()]);
 	}
 	
 	private void saveInFile(String text, Date date) {
