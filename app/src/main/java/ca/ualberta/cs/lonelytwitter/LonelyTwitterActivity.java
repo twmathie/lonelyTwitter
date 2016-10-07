@@ -1,3 +1,9 @@
+/*
+Copyright (C) 2016 Team 20, CMPUT301, University of Alberta - All Rights Reserved.
+You may use, copy or distribute this code under terms and conditions of University of Alberta
+and Code of Student Behavior.
+Please contact twmathie@ualberta.ca for more details or questions.
+ */
 package ca.ualberta.cs.lonelytwitter;
 
 import java.io.BufferedReader;
@@ -23,14 +29,30 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * This class is the main view class in lonelyTwitter class.
+ *
+ * @author Tyler Mathieu
+ * @see NormalTweet
+ * @see java.io.BufferedReader
+ * @see TweetList
+ * @since 1.4
+ */
 public class LonelyTwitterActivity extends Activity {
 
+	/**
+	 * This the name of the file that is saved in your virtual device.
+	 * You can access it through Android Device Manager by selecting your app,
+	 * then data -> data -> data -> file.sav
+	 * @see NormalTweet
+	 */
 	private static final String FILENAME = "file.sav";
 	private EditText bodyText;
 	private ListView oldTweetsList;
 	private ArrayList<Tweet> tweetList = new ArrayList<Tweet>();
 	private ArrayAdapter<Tweet> adapter;
-	
+
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +62,6 @@ public class LonelyTwitterActivity extends Activity {
 		bodyText = (EditText) findViewById(R.id.body);
 		Button saveButton = (Button) findViewById(R.id.save);
 		oldTweetsList = (ListView) findViewById(R.id.oldTweetsList);
-
         Button clearButton = (Button) findViewById(R.id.clear);
 
 		saveButton.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +95,12 @@ public class LonelyTwitterActivity extends Activity {
 		oldTweetsList.setAdapter(adapter);
 	}
 
+
+	/**
+	 * This method loads the json file, and generates the tweets from its contents
+	 * @throws RuntimeException
+	 * @exception FileNotFoundException
+	 */
 	private void loadFromFile() {
 		ArrayList<String> tweets = new ArrayList<String>();
 		try {
@@ -91,7 +118,12 @@ public class LonelyTwitterActivity extends Activity {
 			throw new RuntimeException();
 		}
 	}
-	
+
+	/**
+	 * This method saves the json file when they are written in the user input
+	 * @throws FileNotFoundException
+	 * @throws RuntimeException
+	 */
 	private void saveInFile() {
 		try {
 			FileOutputStream fos = openFileOutput(FILENAME,0);
