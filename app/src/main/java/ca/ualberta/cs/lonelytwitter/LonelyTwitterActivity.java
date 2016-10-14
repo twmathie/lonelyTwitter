@@ -19,8 +19,10 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,11 +48,17 @@ public class LonelyTwitterActivity extends Activity {
 	 * then data -> data -> data -> file.sav
 	 * @see NormalTweet
 	 */
+
+	private Activity activity = this;
 	private static final String FILENAME = "file.sav";
 	private EditText bodyText;
 	private ListView oldTweetsList;
 	private ArrayList<Tweet> tweetList = new ArrayList<Tweet>();
 	private ArrayAdapter<Tweet> adapter;
+
+	public ListView getOldTweetsList(){
+		return oldTweetsList;
+	}
 
 
 	/** Called when the activity is first created. */
@@ -81,9 +89,19 @@ public class LonelyTwitterActivity extends Activity {
             public void onClick(View v) {
                 setResult(RESULT_OK);
                 tweetList.clear();
-                adapter.clear();
+				deleteFile(FILENAME);
+                adapter.notifyDataSetChanged();
             }
         });
+
+		oldTweetsList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+				Intent intent = new Intent(activity, EditTweetActivity.class);
+				intent.putExtra("Tweet", tweetList.get(position));
+				startActivity(intent);
+				};
+		});
+
 	}
 
 	@Override
